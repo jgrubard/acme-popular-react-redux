@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const Nav = (props) => {
 
-  const { users } = props;
+  const { count, mostPopular } = props;
 
   return (
     <div>
@@ -16,7 +16,7 @@ const Nav = (props) => {
         </li>
         <li>
           <Link to='/users'>
-            Users: {users.length}
+            Users: {count}
           </Link>
         </li>
         <li>
@@ -25,10 +25,10 @@ const Nav = (props) => {
           </Link>
         </li>
         {
-          users.length ? (
+          count ? (
             <li>
-              <Link to={`/users/${users[0].id}`}>
-                {users[0].name} is the most popular!
+              <Link to={`/users/${mostPopular.id}`}>
+                {mostPopular.name} is the most popular!
               </Link>
             </li>
           ) : (
@@ -42,9 +42,10 @@ const Nav = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users.sort((lowest, highest) => {
+    count: state.users.length,
+    mostPopular: state.users.sort((lowest, highest) => {
       return highest.rating - lowest.rating;
-    }),
+    })[0]
   }
 }
 

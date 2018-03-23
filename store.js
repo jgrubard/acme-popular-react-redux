@@ -63,7 +63,9 @@ export const postUserThunk = (user, history) => {
           const action = createUser(_user);
           dispatch(action);
         })
-        .then(() => history.push('/users'))
+        .then(() => {
+          history.push('/users')
+        })
     );
   }
 }
@@ -76,7 +78,11 @@ export const putUserThunk = (user, history) => {
         const action = updateUser(_user);
         dispatch(action);
       })
-      .then(() => history.push('/users'))
+      .then(() => {
+        if (history) {
+          history.push('/users');
+        }
+      })
   }
 }
 

@@ -2,41 +2,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import store, { putUserThunk } from '../store'
+import { putUserThunk } from '../store'
 
 class Users extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      rating: 0
+    this.onChangeRating = this.onChangeRating.bind(this);
+  }
+
+  onChangeRating(ev, user) {
+    const _user = {
+      rating: ev.target.value,
+      id: user.id,
+      name: user.name
     }
-
-    this.onIncreaseRating = this.onIncreaseRating.bind(this);
-    this.onDecreaseRating = this.onDecreaseRating.bind(this);
-    this.onSaveRating = this.onSaveRating.bind(this);
-  }
-
-  onIncreaseRating(ev) {
-    this.setState({ rating: ev.target.value })
-  }
-
-  onDecreaseRating(ev) {
-    this.setState({ rating: ev.target.value })
-  }
-
-  onSaveRating(ev) {
-    ev.preventDefault();
-    const action = putUserThunk({ rating: this.state.rating })
-    store.dispatch(action);
-
+    this.props.onSave(_user);
   }
 
   render() {
 
-    console.log(this.state.rating)
-
     const { users } = this.props;
-    const { onIncreaseRating, onDecreaseRating, onSaveRating } = this;
+    const { onChangeRating } = this;
 
     return (
       <div>
@@ -48,13 +34,11 @@ class Users extends Component {
                   {user.name}
                 </Link>
                 <br />
-                <form onSubmit={onSaveRating} >
-                  <button onClick={onIncreaseRating} value={user.rating - 1}>-</button>
-                    &nbsp;
-                    {user.rating}
-                    &nbsp;
-                  <button onClick={onDecreaseRating} value={user.rating + 1}>+</button>
-                </form>
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1}>-</button>
+                  &nbsp;
+                  {user.rating}
+                  &nbsp;
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1}>+</button>
               </li>
             ))
           }
@@ -73,11 +57,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onIncrease:
-//     onDecrease:
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSave: (user) => dispatch(putUserThunk(user))
+  }
+}
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

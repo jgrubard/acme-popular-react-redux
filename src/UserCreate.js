@@ -43,7 +43,6 @@ class UserCreate extends Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps)
   return {
     onSave: (user) => dispatch(postUserThunk(user, ownProps.history))
   }
