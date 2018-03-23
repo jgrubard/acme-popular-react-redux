@@ -8,7 +8,7 @@ import Users from './Users';
 import User from './User';
 import UserCreate from './UserCreate';
 
-import { fetchUsers } from '../store';
+import { fetchUsersThunk } from '../store';
 
 class App extends Component {
 
@@ -37,7 +37,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUsers: () => dispatch(fetchUsers())
+    fetchUsers: () => dispatch(fetchUsersThunk())
   }
 }
 

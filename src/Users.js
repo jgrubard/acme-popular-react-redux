@@ -30,7 +30,9 @@ const Users = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users,
+    users: state.users.sort((lowest, highest) => {
+      return highest.rating - lowest.rating;
+    }),
   }
 }
 
