@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Nav = () => {
+const Nav = (props) => {
+
+  const { users } = props;
+
   return (
     <div>
       <ul>
@@ -12,7 +16,7 @@ const Nav = () => {
         </li>
         <li>
           <Link to='/users'>
-            Users
+            Users: {users.length}
           </Link>
         </li>
         <li>
@@ -20,9 +24,28 @@ const Nav = () => {
             Create a New User
           </Link>
         </li>
+        {
+          users.length ? (
+            <li>
+              <Link to={`/users/${users[0].id}`}>
+                {users[0].name} is the most popular!
+              </Link>
+            </li>
+          ) : (
+            <span></span>
+          )
+        }
       </ul>
     </div>
   );
 }
 
-export default Nav;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users.sort((lowest, highest) => {
+      return highest.rating - lowest.rating;
+    }),
+  }
+}
+
+export default connect(mapStateToProps)(Nav);
