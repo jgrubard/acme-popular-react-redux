@@ -9,7 +9,10 @@ const User = _conn.define('user', {
       msg: 'That name is alredy in use!'
     },
     validate: {
-      notEmpty: true
+      notEmpty: {
+        args: true,
+        msg: 'Please enter a name!'
+      }
     }
   },
   rating: {
@@ -19,6 +22,10 @@ const User = _conn.define('user', {
       msg: 'Please enter a rating'
     },
     validate: {
+      isInt: {
+        args: true,
+        msg: 'Please enter integers only'
+      },
       min: {
         args: 1,
         msg: 'Please choose a number between 1 and 10'

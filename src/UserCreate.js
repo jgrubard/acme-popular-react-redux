@@ -35,9 +35,7 @@ class UserCreate extends Component {
 
   render() {
     const { onInputName, onInputRating, onSaveUser } = this;
-    const { name } = this.state;
-
-    const {error } = this.props;
+    const { name, rating } = this.state;
 
     return (
       <div>
@@ -45,16 +43,10 @@ class UserCreate extends Component {
         <form onSubmit={onSaveUser}>
           <input onChange={onInputName} placeholder='enter your name' className='form-control' />
           <input onChange={onInputRating} placeholder='on a scale of 1-10, how would you rate yourself?' className='form-control'  style={{'marginTop':'15px'}}/>
-          <button className='btn btn-primary' disabled={!name.length} style={{'marginTop':'15px'}}>Create User</button>
+          <button className='btn btn-primary' disabled={!name.length || rating <= 1 || rating >= 10} style={{'marginTop':'15px'}}>Create User</button>
         </form>
       </div>
     );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    error: state.error
   }
 }
 
@@ -64,4 +56,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserCreate);
+export default connect(null, mapDispatchToProps)(UserCreate);

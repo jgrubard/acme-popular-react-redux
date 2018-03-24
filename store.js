@@ -70,16 +70,18 @@ export const postUserThunk = (user, history) => {
       axios.post('/api/users', user)
         .then(res => res.data)
         .then(_user => {
-          let action = createUser(_user);
-          if (!action.user.rating) {
-            const errorMessage = action.user.errors[0].message;
-            action = gotError(errorMessage)
+          const action = createUser(_user);
+          if (action.user.errors) {
+            const error = action.user.errors[0].message;
+            dispatch(gotError(error));
+          } else {
+            if (initialState.error) {
+              dispatch(gotError(''))
+            }
             dispatch(action);
-          }
-          else {
-            dispatch(action);
-            dispatch(gotError(''))
-            history.push('/users')
+            if (history) {
+              history.push('/users');
+            }
           }
         })
     );
@@ -91,29 +93,21 @@ export const putUserThunk = (user, history) => {
     return axios.put(`/api/users/${user.id}`, user)
       .then(res => res.data)
       .then(_user => {
-        // const action = updateUser(_user);
-        // dispatch(action);
-
-          let action = updateUser(_user);
-          if (!action.user.rating) {
-            const errorMessage = action.user.errors[0].message;
-            action = gotError(errorMessage)
+          const action = updateUser(_user);
+          if (action.user.errors) {
+            const error = action.user.errors[0].message;
+            dispatch(gotError(error));
+          } else {
+            if (initialState.error) {
+              dispatch(gotError(''))
+            }
             dispatch(action);
-          }
-          else {
-            dispatch(action);
-            dispatch(gotError(''))
             if (history) {
               history.push('/users');
             }
           }
 
       })
-      // .then(() => {
-        // if (history) {
-        //   history.push('/users');
-        // }
-      // })
   }
 }
 

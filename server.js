@@ -44,7 +44,7 @@ app.delete('/api/users/:id', (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    // console.error(err.message);
+    console.error(err);
     res.send(err);
     // next();
 })

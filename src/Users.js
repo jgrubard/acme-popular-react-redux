@@ -30,13 +30,13 @@ class Users extends Component {
           {
             users.map(user => (
               <li key={user.id} className='list-group-item'>
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1} className='btn btn-dark btn-sm'>
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1} className='btn btn-outline-dark' disabled={user.rating <= 1}>
                   <strong> - </strong>
                 </button>
                   <div className='badge badge-warning' style={{'margin':'0 10px 0 10px'}}>
                     {user.rating}
                   </div>
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1} className='btn btn-dark btn-sm'>
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1} className='btn btn-outline-dark' disabled={user.rating >= 10}>
                   <strong> + </strong>
                 </button>
                 <Link to={`/users/${user.id}`} style={{'marginLeft':'20px'}}>
