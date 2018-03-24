@@ -22,7 +22,7 @@ class App extends Component {
         <div>
           <h1>ACME Users Popularity Contest</h1>
           <h2>React-Redux Remix</h2>
-          <Nav />
+          <Route component={Nav} />
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/users' component={Users} />

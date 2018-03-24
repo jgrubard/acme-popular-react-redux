@@ -3,33 +3,77 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Nav = (props) => {
-
+  // console.log(props)
   const { count, mostPopular } = props;
+  const path = props.location.pathname;
 
   return (
+
     <div>
-      <ul>
-        <li>
-          <Link to='/'>
-            Home
-          </Link>
+      <ul className='nav'>
+        <li className='nav-item'>
+          {
+            path === '/' ? (
+              <span className='nav-link disabled'>
+                Home
+              </span>
+            ) : (
+              <Link to='/' className='nav-link'>
+                Home
+              </Link>
+            )
+          }
+
         </li>
-        <li>
-          <Link to='/users'>
-            Users: {count}
-          </Link>
+        <li className='nav-item'>
+          {
+            path === '/users' ? (
+              <span className='nav-link disabled'>
+                Users &nbsp;
+                <span className='badge badge-secondary'>
+                  {count}
+                </span>
+              </span>
+            ) : (
+              <Link to='/users' className='nav-link'>
+                Users &nbsp;
+                <span className='badge badge-primary'>
+                  {count}
+                </span>
+              </Link>
+            )
+          }
+
         </li>
-        <li>
-          <Link to='/users/create'>
-            Create a New User
-          </Link>
+        <li className='nav-item'>
+          {
+            path === '/users/create' ? (
+              <span className='nav-link disabled'>
+                Create a New User
+              </span>
+            ) : (
+              <Link to='/users/create' className='nav-link'>
+                Create a New User
+              </Link>
+            )
+          }
+
         </li>
         {
           count ? (
-            <li>
-              <Link to={`/users/${mostPopular.id}`}>
-                {mostPopular.name} is the most popular!
-              </Link>
+            <li className='nav-item'>
+              {
+                path === `/users/${mostPopular.id}` ? (
+                  <span className='nav-link disabled'>
+                    {mostPopular.name} is the most popular!
+                  </span>
+                ) : (
+                  <Link to={`/users/${mostPopular.id}`} className='nav-link'>
+                    {mostPopular.name} is the most popular!
+                  </Link>
+                )
+              }
+
             </li>
           ) : (
             <span></span>

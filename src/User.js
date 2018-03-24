@@ -60,11 +60,13 @@ class User extends Component {
     return (
       <div>
         <form onSubmit={onSaveUser}>
-          <input value={name} onChange={onChangeName} />
-          <input value={rating} onChange={onChangeRating} />
-          <button>Update</button>
+          <label>User Name:</label>
+          <input value={name} onChange={onChangeName} className='form-control' />
+          <label style={{'marginTop':'15px'}}>Update Rating:</label>
+          <input value={rating} onChange={onChangeRating} className='form-control' />
+          <button className='btn btn-success' style={{'marginTop':'15px'}}>Update</button>
         </form>
-          <button onClick={onDeleteUser}>Delete</button>
+          <button onClick={onDeleteUser} className='btn btn-danger'>Delete</button>
       </div>
     );
   }

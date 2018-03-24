@@ -30,12 +30,13 @@ class UserCreate extends Component {
 
   render() {
     const { onInputName, onInputRating, onSaveUser } = this;
+    const { name } = this.state;
     return (
       <div>
         <form onSubmit={onSaveUser}>
-          <input onChange={onInputName} placeholder='Please enter a User Name' />
-          <input onChange={onInputRating} placeholder='Please enter a Rating' />
-          <button>Create User</button>
+          <input onChange={onInputName} placeholder='Please enter a User Name' className='form-control' />
+          <input onChange={onInputRating} placeholder='Please enter a Rating' className='form-control'  style={{'marginTop':'15px'}}/>
+          <button className='btn btn-primary' disabled={!name.length} style={{'marginTop':'15px'}}>Create User</button>
         </form>
       </div>
     );

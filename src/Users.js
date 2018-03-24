@@ -26,19 +26,18 @@ class Users extends Component {
 
     return (
       <div>
-        <ul>
+        <ul className='list-group'>
           {
             users.map(user => (
-              <li key={user.id}>
-                <Link to={`/users/${user.id}`}>
+              <li key={user.id} className='list-group-item'>
+                <Link to={`/users/${user.id}`} style={{'marginRight':'15px'}}>
                   {user.name}
                 </Link>
-                <br />
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1}>-</button>
-                  &nbsp;
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1} className='btn btn-outline-dark btn-sm'>-</button>
+                  &nbsp;&nbsp;
                   {user.rating}
-                  &nbsp;
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1}>+</button>
+                  &nbsp;&nbsp;
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1} className='btn btn-outline-dark btn-sm'>+</button>
               </li>
             ))
           }
