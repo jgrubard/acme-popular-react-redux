@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postUserThunk } from '../store';
+import ErrorHandler from './ErrorHandler'
 
 class UserCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      rating: 0
+      rating: 0,
+      error: ''
     }
     this.onInputName = this.onInputName.bind(this);
     this.onInputRating = this.onInputRating.bind(this);
@@ -24,22 +26,35 @@ class UserCreate extends Component {
 
   onSaveUser(ev) {
     ev.preventDefault();
-    const user = this.state;
+    const user = {
+      name: this.state.name,
+      rating: this.state.rating
+    }
     this.props.onSave(user)
   }
 
   render() {
     const { onInputName, onInputRating, onSaveUser } = this;
     const { name } = this.state;
+
+    const {error } = this.props;
+
     return (
       <div>
+        <ErrorHandler />
         <form onSubmit={onSaveUser}>
-          <input onChange={onInputName} placeholder='Please enter a User Name' className='form-control' />
-          <input onChange={onInputRating} placeholder='Please enter a Rating' className='form-control'  style={{'marginTop':'15px'}}/>
+          <input onChange={onInputName} placeholder='enter your name' className='form-control' />
+          <input onChange={onInputRating} placeholder='on a scale of 1-10, how would you rate yourself?' className='form-control'  style={{'marginTop':'15px'}}/>
           <button className='btn btn-primary' disabled={!name.length} style={{'marginTop':'15px'}}>Create User</button>
         </form>
       </div>
     );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    error: state.error
   }
 }
 
@@ -49,4 +64,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(UserCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(UserCreate);

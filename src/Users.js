@@ -30,14 +30,26 @@ class Users extends Component {
           {
             users.map(user => (
               <li key={user.id} className='list-group-item'>
-                <Link to={`/users/${user.id}`} style={{'marginRight':'15px'}}>
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1} className='btn btn-dark btn-sm'>
+                  <strong> - </strong>
+                </button>
+                  <div className='badge badge-warning' style={{'margin':'0 10px 0 10px'}}>
+                    {user.rating}
+                  </div>
+                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1} className='btn btn-dark btn-sm'>
+                  <strong> + </strong>
+                </button>
+                <Link to={`/users/${user.id}`} style={{'marginLeft':'20px'}}>
                   {user.name}
+
                 </Link>
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) - 1} className='btn btn-outline-dark btn-sm'>-</button>
-                  &nbsp;&nbsp;
-                  {user.rating}
-                  &nbsp;&nbsp;
-                <button onClick={(ev) => onChangeRating(ev, user)} value={(user.rating * 1) + 1} className='btn btn-outline-dark btn-sm'>+</button>
+                 {
+                    user === users[0] ? (
+                      <span className='badge badge-success' style={{'marginLeft':'20px'}}>Hooray! {user.name} is Number One!</span>
+                    ) : (
+                      <span></span>
+                    )
+                  }
               </li>
             ))
           }

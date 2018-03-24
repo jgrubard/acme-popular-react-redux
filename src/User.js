@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { putUserThunk, deleteUserThunk } from '../store'
 
+import ErrorHandler from './ErrorHandler'
+
 class User extends Component {
   constructor(props) {
     super(props);
@@ -59,6 +61,7 @@ class User extends Component {
     }
     return (
       <div>
+        <ErrorHandler />
         <form onSubmit={onSaveUser}>
           <label>User Name:</label>
           <input value={name} onChange={onChangeName} className='form-control' />

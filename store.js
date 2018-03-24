@@ -5,13 +5,16 @@ import loggingMiddleware from 'redux-logger'
 import axios from 'axios';
 
 const initialState = {
-  users: []
+  users: [],
+  error: ''
 }
 
 const GET_USERS = 'GET_USERS';
 const CREATE_USER = 'CREATE_USER'
 const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
+
+const GOT_ERROR = 'GOT_ERROR';
 
 export const getUsers = (users) => {
   return {
@@ -41,6 +44,13 @@ export const deleteUser = (user) => {
   }
 }
 
+export const gotError = (error) => {
+  return {
+    type: GOT_ERROR,
+    error
+  }
+}
+
 export const fetchUsersThunk = () => {
   return dispatch => {
     return (
@@ -60,11 +70,17 @@ export const postUserThunk = (user, history) => {
       axios.post('/api/users', user)
         .then(res => res.data)
         .then(_user => {
-          const action = createUser(_user);
-          dispatch(action);
-        })
-        .then(() => {
-          history.push('/users')
+          let action = createUser(_user);
+          if (!action.user.rating) {
+            const errorMessage = action.user.errors[0].message;
+            action = gotError(errorMessage)
+            dispatch(action);
+          }
+          else {
+            dispatch(action);
+            dispatch(gotError(''))
+            history.push('/users')
+          }
         })
     );
   }
@@ -75,14 +91,29 @@ export const putUserThunk = (user, history) => {
     return axios.put(`/api/users/${user.id}`, user)
       .then(res => res.data)
       .then(_user => {
-        const action = updateUser(_user);
-        dispatch(action);
+        // const action = updateUser(_user);
+        // dispatch(action);
+
+          let action = updateUser(_user);
+          if (!action.user.rating) {
+            const errorMessage = action.user.errors[0].message;
+            action = gotError(errorMessage)
+            dispatch(action);
+          }
+          else {
+            dispatch(action);
+            dispatch(gotError(''))
+            if (history) {
+              history.push('/users');
+            }
+          }
+
       })
-      .then(() => {
-        if (history) {
-          history.push('/users');
-        }
-      })
+      // .then(() => {
+        // if (history) {
+        //   history.push('/users');
+        // }
+      // })
   }
 }
 
@@ -115,6 +146,11 @@ export const reducer = (state = initialState, action) => {
     case DELETE_USER:
       return Object.assign({}, state, {
         users: [ ...state.users.filter(user => user.id !== action.user.id) ]
+      })
+
+    case GOT_ERROR:
+      return Object.assign({}, state, {
+        error: action.error
       })
     default:
       return state;
