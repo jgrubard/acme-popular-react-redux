@@ -67,7 +67,7 @@ class User extends Component {
           <input value={name} onChange={onChangeName} className='form-control' />
           <label style={{'marginTop':'15px'}}>Update Rating:</label>
           <input value={rating} onChange={onChangeRating} className='form-control' />
-          <button className='btn btn-success' style={{'marginTop':'15px'}} disabled={!name.length || rating >= 10 || rating <= 1}>Update</button>
+          <button className='btn btn-success' style={{'marginTop':'15px'}} disabled={!name.length || rating > 10 || rating < 1}>Update</button>
         </form>
           <button onClick={onDeleteUser} className='btn btn-danger'>Delete</button>
       </div>
