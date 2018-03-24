@@ -65,11 +65,11 @@ const Nav = (props) => {
               {
                 path === `/users/${mostPopular.id}` ? (
                   <span className='nav-link disabled'>
-                    {mostPopular.name} is the most popular!
+                    <strong>{mostPopular.name} is the most popular!</strong>
                   </span>
                 ) : (
                   <Link to={`/users/${mostPopular.id}`} className='nav-link'>
-                    {mostPopular.name} is the most popular!
+                    <strong>{mostPopular.name} is the most popular!</strong>
                   </Link>
                 )
               }
