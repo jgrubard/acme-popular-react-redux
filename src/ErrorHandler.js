@@ -3,19 +3,30 @@ import { connect } from 'react-redux';
 import { gotError } from '../store'
 
 class ErrorHandler extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor() {
+    super();
+    this.closeError = this.closeError.bind(this);
+  }
 
   componentWillUnmount() {
     this.props.resetError()
   }
 
+  closeError() {
+    this.props.resetError()
+  }
+
   render() {
+
+    const { closeError } = this;
+
     if (this.props.error.length) {
       return (
-        <div className='alert alert-danger' role='alert'>
+        <div className='alert alert-danger  alert-dismissible' role='alert'>
           {this.props.error}
+          <button type='button' className='close' data-dismiss='alert' aria-label='Close' onClick={closeError}>
+            <span aria-hidden='true'>&times;</span>
+          </button>
         </div>
       );
     } else {

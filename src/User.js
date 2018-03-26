@@ -52,7 +52,7 @@ class User extends Component {
 
   render() {
 
-    const { user } = this.props;
+    const { user, error } = this.props;
     const { name, rating } = this.state;
     const { onChangeName, onChangeRating, onSaveUser, onDeleteUser } = this;
 
@@ -64,9 +64,9 @@ class User extends Component {
         <ErrorHandler />
         <form onSubmit={onSaveUser}>
           <label>User Name:</label>
-          <input value={name} onChange={onChangeName} className='form-control' />
-          <label style={{'marginTop':'15px'}}>Update Rating:</label>
-          <input value={rating} onChange={onChangeRating} className='form-control' />
+          <input value={name} onChange={onChangeName} className={`form-control${error ? ' is-invalid' : ''}`} />
+          <label style={{'marginTop':'15px'}}>Update Rating: Select a number from 1-10</label>
+          <input value={rating} onChange={onChangeRating} className='form-control' type='number' />
           <button className='btn btn-success' style={{'marginTop':'15px'}} disabled={!name.length || rating > 10 || rating < 1}>Update</button>
         </form>
           <button onClick={onDeleteUser} className='btn btn-danger'>Delete</button>
@@ -79,6 +79,7 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const { users } = state;
   return {
+    error: state.error,
     user: users.find(user => user.id === id * 1)
   }
 }

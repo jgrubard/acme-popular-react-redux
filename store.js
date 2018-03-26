@@ -101,11 +101,11 @@ export const putUserThunk = (user, history) => {
             history.push('/users');
           }
         })
-        // .then(() => dispatch(gotError('')))
+        .then(() => dispatch(gotError('v')))
         .catch(err => {
           console.error(err);
-          // dispatch(gotError(err.response.data.errors[0].message));
-          dispatch(gotError(err));
+          dispatch(gotError(err.response.data.errors[0].message));
+          // dispatch(gotError(err));
         })
     );
   }
