@@ -78,7 +78,6 @@ export const postUserThunk = (user, history) => {
             history.push('/users');
           }
         })
-        // .then(() => dispatch(gotError('')))
         .catch(err => {
           console.error(err);
           dispatch(gotError(err.response.data.errors[0].message));
@@ -101,11 +100,8 @@ export const putUserThunk = (user, history) => {
             history.push('/users');
           }
         })
-        .then(() => dispatch(gotError('v')))
         .catch(err => {
-          console.error(err);
           dispatch(gotError(err.response.data.errors[0].message));
-          // dispatch(gotError(err));
         })
     );
   }
