@@ -6,7 +6,7 @@ const User = _conn.define('user', {
     allowNull: false,
     unique: {
       args: true,
-      msg: 'That name is alredy in use!'
+      msg: 'That name is already in use!'
     },
     validate: {
       notEmpty: {
@@ -37,8 +37,6 @@ const User = _conn.define('user', {
         msg: 'Please choose a number between 1 and 10'
       },
     }
-
-
   }
 }, {
   timestamps: false
