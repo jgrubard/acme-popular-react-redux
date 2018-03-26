@@ -17,11 +17,13 @@ const User = _conn.define('user', {
   },
   rating: {
     type: Sequelize.INTEGER,
-    allowNull: {
-      args: false,
-      msg: 'Please enter a rating'
-    },
+    allowNull: false,
     validate: {
+      not: ['[a-z]', 'i'],
+      isNumeric: {
+        args: true,
+        msg: 'Please enter numeric characters only'
+      },
       isInt: {
         args: true,
         msg: 'Please enter integers only'
@@ -33,7 +35,7 @@ const User = _conn.define('user', {
       max: {
         args: 10,
         msg: 'Please choose a number between 1 and 10'
-      }
+      },
     }
 
 

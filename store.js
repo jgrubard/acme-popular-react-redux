@@ -71,18 +71,17 @@ export const postUserThunk = (user, history) => {
         .then(res => res.data)
         .then(_user => {
           const action = createUser(_user);
-          if (action.user.errors) {
-            const error = action.user.errors[0].message;
-            dispatch(gotError(error));
-          } else {
-            if (initialState.error) {
-              dispatch(gotError(''))
-            }
-            dispatch(action);
-            if (history) {
-              history.push('/users');
-            }
+          dispatch(action);
+        })
+        .then(() => {
+          if (history) {
+            history.push('/users');
           }
+        })
+        // .then(() => dispatch(gotError('')))
+        .catch(err => {
+          console.error(err);
+          dispatch(gotError(err.response.data.errors[0].message));
         })
     );
   }
@@ -90,24 +89,25 @@ export const postUserThunk = (user, history) => {
 
 export const putUserThunk = (user, history) => {
   return dispatch => {
-    return axios.put(`/api/users/${user.id}`, user)
-      .then(res => res.data)
-      .then(_user => {
+    return (
+      axios.put(`/api/users/${user.id}`, user)
+        .then(res => res.data)
+        .then(_user => {
           const action = updateUser(_user);
-          if (action.user.errors) {
-            const error = action.user.errors[0].message;
-            dispatch(gotError(error));
-          } else {
-            if (initialState.error) {
-              dispatch(gotError(''))
-            }
-            dispatch(action);
-            if (history) {
-              history.push('/users');
-            }
+          dispatch(action);
+        })
+        .then(() => {
+          if (history) {
+            history.push('/users');
           }
-
-      })
+        })
+        // .then(() => dispatch(gotError('')))
+        .catch(err => {
+          console.error(err);
+          // dispatch(gotError(err.response.data.errors[0].message));
+          dispatch(gotError(err));
+        })
+    );
   }
 }
 

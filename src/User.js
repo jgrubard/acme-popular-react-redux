@@ -9,7 +9,7 @@ class User extends Component {
     super(props);
     this.state = {
       name: props.user ? props.user.name : '',
-      rating: props.user ? props.user.rating : 0
+      rating: props.user ? props.user.rating : ''
     }
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeRating = this.onChangeRating.bind(this);
@@ -20,7 +20,7 @@ class User extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       name: nextProps.user ? nextProps.user.name : '',
-      rating: nextProps.user ? nextProps.user.rating : 0
+      rating: nextProps.user ? nextProps.user.rating : ''
     })
   }
 

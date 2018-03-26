@@ -8,14 +8,13 @@ class UserCreate extends Component {
     super(props);
     this.state = {
       name: '',
-      rating: 0,
-      error: ''
+      rating: '',
+      // error: ''
     }
     this.onInputName = this.onInputName.bind(this);
     this.onInputRating = this.onInputRating.bind(this);
     this.onSaveUser = this.onSaveUser.bind(this);
   }
-
   onInputName(ev) {
     this.setState({ name: ev.target.value })
   }
